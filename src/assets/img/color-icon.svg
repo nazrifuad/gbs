@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.469" height="13.842" viewBox="0 0 11.469 13.842">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e25e3e"/>
+      <stop offset="1" stop-color="#22a699"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_material-invert-colors" data-name="Icon material-invert-colors" d="M15.792,7.462,11.735,3.4,7.677,7.462a5.735,5.735,0,1,0,8.115,0Zm-4.057,8.358A4.3,4.3,0,0,1,8.7,8.48l3.039-3.047Z" transform="translate(-6 -3.405)" fill="url(#linear-gradient)"/>
+</svg>

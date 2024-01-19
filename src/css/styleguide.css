@@ -1,0 +1,683 @@
+/* ------------------------- Styleguide GBS -------------------------------------------------- */
+
+
+/* ------------------------- Fonts -------------------------------------------------- */
+
+@font-face {
+	font-family: 'Satoshi, Black';
+	src: url("/src/assets/fonts/Satoshi-Black.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'Satoshi, Bold';
+	src: url("/src/assets/fonts/Satoshi-Bold.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'Satoshi, Medium';
+	src: url("/src/assets/fonts/Satoshi-Medium.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'Satoshi, Regular';
+	src: url("/src/assets/fonts/Satoshi-Regular.woff2") format('woff2');
+}
+
+
+/* ------------------------- Colors -------------------------------------------------- */
+
+:root {
+	--black-color: #111111;
+	--black-lighter-color: #191919;
+	--main-color: #e25f3e;
+	--secondary-color: #22A699;
+	--grey-color: #777777;
+	--white-color: #ffffff;
+
+	--bg-blur: rgba(255, 255, 255, 0.16);
+	--bg-blur-darker: #1d1d1d;
+	--transparent-color: rgba(0, 0, 0, 0);
+
+	--alert-failed-color: #951818;
+
+	--small-gap: 1em;
+	--general-gap: min(4vw, 4em);
+	--big-gap: 7em;
+
+
+	--section-padding: min(9vw, 9em);
+	--section-padding-medium: min(7vw, 7em);
+	--section-padding-small: min(4vw, 4em);
+	--container-padding: clamp(2.5em, 6vw, 8em);
+	--gap-padding: clamp(1.5em, 4vw, 2.5em);
+
+	--title-size: max(5em, 7.5vw);
+	--fast-transition: 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+	--smooth-transition: 0.7s cubic-bezier(0.5, 0.5, 0, 1);
+	--slow-transition: 1s cubic-bezier(.76, 0, 0.24, 1);
+	--border-radius: clamp(1em, 1vw, 1em);
+}
+
+@media only screen and (max-width: 1024px) {
+	:root {
+		--container-padding: 6vw;
+		--section-padding: 13vw;
+		--section-padding-medium: 11vw;
+		--section-padding-small: 8vw;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	:root {
+		--container-padding: min(4vw, 4em);
+		--section-padding: 11vw;
+		--section-padding-medium: 14vw;
+		--section-padding-small: 11vw;
+	}
+}
+
+
+/* ------------------------- Body -------------------------------------------------- */
+
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+/* Works on Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--main-color) var(--transparent-color);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	-webkit-appearance: none;
+	width: 0;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--black-color);
+	border-radius: .5em;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: var(--main-color);
+	border-radius: .5em;
+}
+
+
+li,
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	font-family: 'Satoshi, Regular', sans-serif;
+	color: var(--white-color);
+	line-height: 1.5;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 16px;
+	font-size: clamp(16px, 1.2vw, 19px);
+	background-color: var(--black-color);
+
+	overflow-x: hidden;
+}
+
+/* preload */
+/* body.loading {
+	overflow: hidden;
+	height: 100vh;
+	cursor: wait;
+}
+body.loading.removePreloader {
+	overflow: auto;
+	height: auto;
+	cursor: default;
+} */
+
+html {
+	scroll-behavior: initial;
+}
+
+html,
+body {
+	width: 100%;
+	min-height: 100%;
+	-webkit-font-smoothing: antialiased;
+	position: relative;
+}
+
+
+/* Selection */
+::selection {
+	background-color: transparent;
+	color: var(--main-color);
+	text-shadow: none;
+	pointer-events: fill;
+}
+
+::-moz-selection {
+	background-color: transparent;
+	color: var(--main-color);
+	text-shadow: none;
+	pointer-events: fill;
+}
+
+canvas,
+img,
+video {
+	max-width: 100%;
+	height: auto;
+	box-sizing: border-box;
+}
+
+video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: relative;
+}
+
+svg {
+	max-width: none;
+	height: auto;
+	box-sizing: border-box;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+	vertical-align: middle;
+}
+
+img,
+a, .hamburger, .select {
+	-webkit-tap-highlight-color: transparent !important;
+}
+
+@media screen and (max-width: 767px){
+	html {
+		scroll-behavior: smooth !important;
+	}	
+}
+
+/* ------------------------- Typography -------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+ul,
+ol,
+span,
+strong,
+em {
+	padding: 0;
+	margin: 0;
+	font-style: normal;
+	font-weight: 450;
+	letter-spacing: normal;
+}
+
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+p:last-child,
+p.big:last-child,
+p.small:last-child,
+a:last-child,
+strong:last-child {
+	margin-bottom: 0;
+}
+
+
+
+h1 {
+	line-height: 1.265;
+	font-size: calc(clamp(3em, 5vw, 6em) * 1.1);
+}
+
+
+h2 {
+	font-size: calc(clamp(2em, 5vw, 4.5em) * .75);
+	line-height: 1.065;
+}
+
+h3 {
+	font-size: clamp(1.45em, 2.55vw, 2.4em);
+	line-height: 1.4;
+}
+
+h4 {
+	font-size: clamp(1.1em, 1.5vw, 1.5em);
+	line-height: 1.25;
+}
+
+h5 {
+	font-size: 1em;
+	line-height: 1.4;
+	letter-spacing: 0.063em;
+}
+
+h6 {
+	font-size: 1em;
+	line-height: 1.065;
+	letter-spacing: 0.063em;
+}
+
+h1,
+h2,
+h3 {
+	color: var(--white-color);
+	font-family: 'Satoshi, Black', sans-serif;
+	font-weight: 600;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+h4,
+h5,
+h6 {
+	color: var(--white-color);
+	font-family: 'Satoshi, Black', sans-serif;
+	font-weight: 500;
+	text-transform: inherit;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+h4.general-subheading {
+	text-transform: inherit;
+	font-family: 'Satoshi, Medium', sans-serif;
+}
+
+p {
+	font-family: 'Satoshi, Medium', sans-serif;
+	font-weight: 400;
+	font-size: 1em;
+	line-height: 1.55;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+p.small {
+	font-size: .8em;
+	line-height: 1.75;
+	letter-spacing: .015em;
+}
+
+p.big {
+	font-size: 1.6em;
+	font-size: calc(clamp(1.25em, 2.35vw, 2em) * 1.1);
+	line-height: 1.35;
+	font-family: 'Satoshi, Bold', sans-serif;
+}
+
+strong {
+	font-weight: 800;
+}
+
+a {
+	color: var(--black-color);
+	text-decoration: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+/* ------------------------- Main Elements -------------------------------------------------- */
+
+.section {
+	position: relative;
+	display: block;
+	padding-top: var(--section-padding);
+	padding-bottom: var(--section-padding);
+}
+
+.section.s-padding {
+	padding-top: calc(var(--section-padding) / 2);
+	padding-bottom: calc(var(--section-padding) / 2);
+}
+
+.section.no-padding {
+	padding-top: unset;
+	padding-bottom: unset;
+}
+
+.section.full-height {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+}
+
+.container.full-width {
+	max-width: 100% !important;
+	padding: 0 !important;
+}
+
+.default-header {
+	padding-top: calc(var(--section-padding) * 1.33);
+	padding-bottom: calc(var(--section-padding) * .66);
+}
+
+.container {
+	margin: 0 auto;
+	padding-left: var(--container-padding);
+	padding-right: var(--container-padding);
+	max-width: 100em;
+	max-width: 100%;
+}
+
+.container.large {
+	padding-left: calc(var(--gap-padding) / 2);
+	padding-right: calc(var(--gap-padding) / 2);
+}
+
+.container.medium {
+	padding-left: calc(var(--container-padding) * 2);
+	padding-right: calc(var(--container-padding) * 2);
+}
+
+.container.small {
+	padding-left: calc(var(--container-padding) * 3);
+	padding-right: calc(var(--container-padding) * 3);
+}
+
+.container.no-padding {
+	padding-left: unset;
+	padding-right: unset;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+/* Clear floats after the columns */
+.row::after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+
+/* General - Create two equal columns that floats next to each other */
+[class*="col-"] {
+	float: left;
+	/* padding: 10px; */
+}
+
+/* For desktop: */
+.col-1 {
+	width: 8.33%;
+}
+
+.col-2 {
+	width: 16.66%;
+}
+
+.col-3 {
+	width: 25%;
+}
+
+.col-4 {
+	width: 33.33%;
+}
+
+.col-5 {
+	width: 41.66%;
+}
+
+.col-6 {
+	width: 50%;
+}
+
+.col-7 {
+	width: 58.33%;
+}
+
+.col-8 {
+	width: 66.66%;
+}
+
+.col-9 {
+	width: 75%;
+}
+
+.col-10 {
+	width: 83.33%;
+}
+
+.col-11 {
+	width: 91.66%;
+}
+
+.col-12 {
+	width: 100%;
+}
+
+[class*="col-"].no-padding {
+	padding: 0;
+}
+
+@media only screen and (max-width: 767px) {
+
+	/* For mobile phones: */
+	[class*="col-"] {
+		width: 100%;
+		padding: 0.5em 0;
+	}
+
+}
+
+/* ipad/tablet */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	[class*="col-"] {
+		width: 100%;
+	}
+}
+
+
+
+/* ------------------------- Buttons -------------------------------------------------- */
+
+button {
+	padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  background-color: transparent;
+}
+
+.hero-btn-wrapper {
+	padding-top: 1em;
+}
+
+.btn-link {
+	position: relative;
+}
+
+.btn-icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateY(-0.1em);
+}
+
+.btn-icon svg {
+	transition: var(--fast-transition);
+}
+
+.default-btn .btn-link:hover .btn-icon svg {
+	opacity: .6;
+	transform: translateX(-0.2em);
+}
+
+.default-btn {
+	position: relative;
+	border: 0;
+	background: transparent;
+}
+
+.default-btn.main-btn .btn-link {
+	padding: 0.5em 1em;
+	overflow: hidden;
+}
+
+.default-btn.secondary-btn .btn-link {
+	background: var(--main-color);
+	border-radius: var(--border-radius);
+	padding: 0.5em 1em;
+	overflow: hidden;
+}
+
+.default-btn .btn-link {
+	cursor: pointer;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	/* padding: 1em 0; */
+}
+
+/* .default-btn.main-btn .btn-link .btn-text {
+	padding-right: 1em;
+} */
+
+.default-btn.main-btn .btn-link .inner-btn-text, .default-btn .btn-link .btn-text  {
+	font-family: 'Satoshi, Regular', sans-serif;
+	font-size: 1em;
+	text-transform: capitalize;
+	color: var(--white-color);
+}
+
+/* scroll down */
+.hero-banner .scroll-down .default-btn.main-btn .btn-link {
+	gap: var(--small-gap);
+	flex-direction: column-reverse;
+	padding-top: 1em
+}
+
+.hero-banner .scroll-down .default-btn.main-btn .btn-link .btn-text {
+	padding: 0;
+}
+
+/* hover effect */
+.btn-text {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+}
+
+.btn-text span {
+  display: inline-flex;
+  transition: transform var(--fast-transition);
+}
+
+.btn-text::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+@media (hover: hover) {
+
+	.btn-text::after {
+		content: attr(data-replace);
+		height: 100%;
+		top: 0;
+		transform-origin: 50% 100%;
+		transform: translate3d(0, 200%, 0);
+		transition: transform var(--fast-transition);
+		color: var(--white-color);
+	}
+
+	.default-btn.main-btn .btn-link:hover .btn-text span, .default-btn.secondary-btn .btn-link:hover .btn-text span {
+		transform: translate3d(0, -200%, 0);
+	}
+
+	.default-btn.main-btn .btn-link:hover .btn-text::after, .default-btn.secondary-btn .btn-link:hover .btn-text::after {
+		transform: translate3d(0, 0, 0);
+	}
+
+}
+
+/* upload button */
+.default-btn.main-btn.upload .btn-link {
+	background: var(--grey-color);
+	border-radius: var(--border-radius);
+}
+
+.default-btn.main-btn.upload .btn-link .btn-text {
+	font-size: .9em;
+	padding-right: 1.5em;
+}
+
+.default-btn.main-btn.upload .btn-link .btn-text, .default-btn.main-btn.upload .btn-link .btn-text::after {
+	padding-right: 2em;
+}
+
+.default-btn.main-btn.upload .btn-link .btn-text::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 0;
+	width: 1em;
+	height: 1em;
+	display: block;
+	background-image: url(/src/assets/img/plus-icon.svg);
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	transform: translateY(-50%);
+}
+
+
+/* reset styling */
+.default-btn.main-btn.reset .btn-link .inner-btn-text {
+	font-size: .8em;
+	color: var(--alert-failed-color);
+	font-family: 'Satoshi, Medium', sans-serif;
+}
+
+.default-btn.main-btn.reset .btn-link  .btn-text::after {
+	color: var(--alert-failed-color);
+	font-size: .8em;
+	font-family: 'Satoshi, Medium', sans-serif;
+}
+
+
+@media only screen and (max-width: 1024px) {
+	.default-btn.main-btn .btn-link .inner-btn-text,
+	.default-btn.secondary-btn .btn-link .inner-btn-text {
+		font-size: .95em;
+	}
+
+	.btn-icon svg {
+		width: 2em;
+	}
+}
