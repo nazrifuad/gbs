@@ -2449,6 +2449,7 @@ main.main-content {
   overflow: hidden;
   transition: var(--smooth-transition);
   opacity: .5;
+  user-select: none;
 }
 
 .accordion-wrapper .accordion-item .accordion-top {
@@ -2540,6 +2541,10 @@ main.main-content {
   opacity: 1;
 }
 
+.accordion-wrapper .accordion-item.active .accordion-bottom {
+  display: block;
+}
+
 @media only screen and (max-width: 767px) {
   .accordion-wrapper .accordion-item .accordion-top {
     padding: 1.2em 5.5em 1.2em 1.2em;
@@ -2577,9 +2582,9 @@ main.main-content {
   z-index: 2;
 }
 
-.tabs-title-wrap {
+/* .tabs-title-wrap {
   pointer-events: none;
-}
+} */
 
 .tabs-title-wrap p {
   font-family: 'Samsung Sharp Sans, Regular', sans-serif;
@@ -2596,16 +2601,16 @@ main.main-content {
   gap: var(--gap-padding);
 }
 
-.tab-wrapper .tabContent {
+.tab-wrapper .accordion-content {
   display: none;
   animation: fadeIn 3s;
   -webkit-animation: fadeIn 3s;
   -moz-animation: fadeIn 3s;
   -o-animation: fadeIn 3s;
   -ms-animation: fadeIn 3s;
-}
+} 
 
-.tab-wrapper .active {
+.tab-wrapper.active .accordion-content {
   display: block;
 }
 
