@@ -39,8 +39,13 @@ import portfolioImg01 from "../../assets/img/portfolio-thumbnail.png";
 import portfolioImg02 from "../../assets/img/portfolio-thumbnail-02.jpg";
 import portfolioImg03 from "../../assets/img/portfolio-thumbnail-03.jpg";
 
-// footer
-import gbsHorizontalLogo from "../../assets/img/full-logo-horizontal.svg";
+// components
+import Accordion from "../../components/Accordion/Accordion";
+import Footer from "../../components/Footer/Footer";
+
+
+
+
 
 
 
@@ -48,31 +53,47 @@ const Homepage = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // SMOOTH SCROLLING
-  const locoScroll = new LoconativeScroll({
-    el: document.querySelector("[data-scroll-container]"),
-    scrollToEasing: (t) => (t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2),
-    smooth: true,
-    duration: 0.95,
+  const locoScrollRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize Locomotive Scroll
+    locoScrollRef.current = new LoconativeScroll({
+      el: document.querySelector("[data-scroll-container]"),
+      scrollToEasing: (t) => (t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2),
+      smooth: true,
+      duration: 0.95,
     });
 
     // Set up smooth scrolling
-    locoScroll.on("scroll", () => {
+    locoScrollRef.current.on('scroll', () => {
       ScrollTrigger.update();
     });
 
-    // Each time the window updates, refresh ScrollTrigger and then update LocomotiveScroll
-    window.addEventListener('resize', () => {
-      locoScroll.update();
+    // Handle window resize
+    const handleResize = () => {
+      locoScrollRef.current.update();
       ScrollTrigger.update();
-    });
+    };
 
-    // After everything is set up, refresh ScrollTrigger and update LocomotiveScroll
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Refresh ScrollTrigger and update LoconativeScroll after setup
     ScrollTrigger.addEventListener('refresh', () => {
-      locoScroll.update();
+      locoScrollRef.current.update();
     });
 
-    // Refresh ScrollTrigger and update LocomotiveScroll after setup
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      locoScrollRef.current.destroy();
+    };
+  }, []);
+
+  // Initial ScrollTrigger refresh
+  useEffect(() => {
     ScrollTrigger.refresh();
+  }, []);
 
 
 
@@ -227,37 +248,37 @@ const Homepage = () => {
 
   // EXPERTISE SECTION
     // change text animation
+    // { TO REVISE LATER }
     const changeTextElementsRef = useRef([]);
     let currentIndex = 0;
-    let intervalTime = 4000; 
-    const minIntervalTime = 2000; 
-  
-    const changeText = () => {
-      const changeTextElements = changeTextElementsRef.current;
-  
-      // remove the 'active' class from all elements
-      if (changeTextElements) {
-        changeTextElements.forEach((element) => {
-          element.classList.remove("active");
-        });
-      }
-  
-      // add the 'active' class to the current element
-      changeTextElements[currentIndex].classList.add("active");
-  
-      // increment the index or reset to 0 if it reaches the end
-      currentIndex = (currentIndex + 1) % changeTextElements.length;
-  
-      // adjust the interval time when reaching the end
-      if (currentIndex === 0) {
-        intervalTime = Math.max(minIntervalTime, intervalTime - 100); // Decrease interval time (min 500 milliseconds)
-      }
-  
-      // Call the function recursively with a delay
-      setTimeout(changeText, intervalTime);
-    };
+    let intervalTime = 4000; // Initial interval time in milliseconds
+    const minIntervalTime = 2000; // Minimum interval time in milliseconds
   
     useEffect(() => {
+      const changeTextElements = document.querySelectorAll(".expertise-section .text-slide");
+      changeTextElementsRef.current = Array.from(changeTextElements);
+  
+      function changeText() {
+        // Remove the 'active' class from all elements
+        changeTextElementsRef.current.forEach((element) => {
+          element.classList.remove("active");
+        });
+  
+        // Add the 'active' class to the current element
+        changeTextElementsRef.current[currentIndex].classList.add("active");
+  
+        // Increment the index or reset to 0 if it reaches the end
+        currentIndex = (currentIndex + 1) % changeTextElementsRef.current.length;
+  
+        // Adjust the interval time when reaching the end
+        if (currentIndex === 0) {
+          intervalTime = Math.max(minIntervalTime, intervalTime - 100); // Decrease interval time (min 500 milliseconds)
+        }
+  
+        // Call the function recursively with a delay
+        setTimeout(changeText, intervalTime);
+      }
+  
       // Start the text change
       changeText();
   
@@ -265,7 +286,7 @@ const Homepage = () => {
       return () => {
         clearTimeout(changeText);
       };
-    }, []); // runs once after the initial render
+    }, []);
 
 
   // PORTFOLIO SECTION
@@ -325,14 +346,150 @@ const Homepage = () => {
     
   // FAQS SECTION
     // ACCORDION 
-      // input checked
-      const [isChecked, setChecked] = useState(true);
+      // tabs
+        // State to track the active tab
+        const [activeTab, setActiveTab] = useState(1);
 
-      const handleCheckboxChange = () => {
-        setChecked(!isChecked);
-      };
+        // Handle tab click
+        const handleTabClick = (tabNumber, e) => {
+          e.preventDefault();
+          setActiveTab(tabNumber);
+        };
+
+       // Content for each tab
+      const pricingAccordionData = [
+        {
+          question: 'What size budgets do you typically work with?',
+          answer: (
+            <div>
+              <p>We typically work with clients within the following project brackets: </p>
+              <ul className="custom-point grey">
+                <li>RM2-5k</li>
+                <li>RM5-10k</li>
+                <li>RM10-20k</li>
+                <li>RM25k+</li>
+              </ul>
+            </div>
+          ),
+        },
+        {
+          question: 'How do I figure out how much your services will cost?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+        {
+          question: 'What are the payment terms for a typical project?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+        {
+          question: 'How much does hosting cost?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+        {
+          question: 'Retainer pricing',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+      ];
+
+      const startProjectAccordionData = [
+        {
+          question: 'What size budgets do you typically work with?',
+          answer: (
+            <div>
+              <p>We typically work with clients within the following project brackets: </p>
+              <ul className="custom-point grey">
+                <li>RM2-5k</li>
+                <li>RM5-10k</li>
+                <li>RM10-20k</li>
+                <li>RM25k+</li>
+              </ul>
+            </div>
+          ),
+        },
+        {
+          question: 'How do I figure out how much your services will cost?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+      ];
+
+      const developmentAccordionData = [
+        {
+          question: 'What size budgets do you typically work with?',
+          answer: (
+            <div>
+              <p>We typically work with clients within the following project brackets: </p>
+              <ul className="custom-point grey">
+                <li>RM2-5k</li>
+                <li>RM5-10k</li>
+                <li>RM10-20k</li>
+                <li>RM25k+</li>
+              </ul>
+            </div>
+          ),
+        },
+        {
+          question: 'How do I figure out how much your services will cost?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+      ];
+
+      const designAccordionData = [
+        {
+          question: 'What size budgets do you typically work with?',
+          answer: (
+            <div>
+              <p>We typically work with clients within the following project brackets: </p>
+              <ul className="custom-point grey">
+                <li>RM2-5k</li>
+                <li>RM5-10k</li>
+                <li>RM10-20k</li>
+                <li>RM25k+</li>
+              </ul>
+            </div>
+          ),
+        },
+        {
+          question: 'How do I figure out how much your services will cost?',
+          answer: (
+            <div>
+              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+            </div>
+          ),
+        },
+      ];
+      
 
 
+
+      
+
+
+
+
+    
 
 
 
@@ -419,11 +576,11 @@ const Homepage = () => {
       <section id="hero" className="section hero-banner full-height" data-scroll-section>
         <div className="container">
 
-          <div className="video-overlay">
+          {/* <div className="video-overlay">
             <video playsInline autoPlay loop muted>
               <source src={heroVideo} type="video/mp4" />
             </video>
-          </div>
+          </div> */}
 
           <div className="hero-title-wrap hero-title-reveal mw-full-m mw-full-i text-center">
             <div className="hero-title change-text-wrapper-hero">
@@ -841,13 +998,13 @@ const Homepage = () => {
                 <h3 className="font-white mb-unset">Our people are expert in</h3>
               </div>
               <div className="change-text-wrapper">
-                <div className="change-text text-slide" ref={(el) => changeTextElementsRef.current.push(el)}>
+                <div className="change-text text-slide">
                   <h3 className="font-white main-font-gradient"> Technology at the Heart </h3>
                 </div>
-                <div className="change-text text-slide" ref={(el) => changeTextElementsRef.current.push(el)}>
+                <div className="change-text text-slide">
                   <h3 className="font-white main-font-gradient"> Industry Knowledge </h3>
                 </div>
-                <div className="change-text text-slide" ref={(el) => changeTextElementsRef.current.push(el)}>
+                <div className="change-text text-slide">
                   <h3 className="font-white main-font-gradient"> Comprehensive Services </h3>
                 </div>
               </div>
@@ -1101,216 +1258,39 @@ const Homepage = () => {
           <div className="tabs-link-wrap">
 
             <div className="desktop-tabs">
+
               <div className="tabs-link">
 
-                <div className="tabLinks active">
-                  <div className="tabs-link-item">
-                    <p>Pricing</p>
-                  </div>
+                <div className="tabs-link">
+                  {[1, 2, 3, 4].map((tabNumber) => (
+                    <div
+                      key={tabNumber}
+                      className={`tabLinks ${activeTab === tabNumber ? 'active' : ''}`}
+                      onClick={(e) => handleTabClick(tabNumber, e)}
+                    >
+                      <div className="tabs-link-item">
+                        <p>
+                          {tabNumber === 1 && 'Pricing'}
+                          {tabNumber === 2 && 'Starting a project'}
+                          {tabNumber === 3 && 'Design'}
+                          {tabNumber === 4 && 'Development'}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="tabLinks">
-                  <div className="tabs-link-item">
-                    <p>Starting a project</p>
-                  </div>
-                </div>
-
-                <div className="tabLinks">
-                  <div className="tabs-link-item">
-                    <p>Design</p>
-                  </div>
-                </div>
-
-                <div className="tabLinks">
-                  <div className="tabs-link-item">
-                    <p>Development</p>
-                  </div>
-                </div>
-
 
               </div>
+              
             </div>
           </div>
 
-
           {/* tab content */}
-          <div className="tab-wrapper tabs-result-wrapper triggerElement">
-
-            {/* pricing */}
-            <div className="tabContent active" id="pricingTab">
-              <div className="accordion-wrapper" id="pricingAccordion">
-
-                <div className="accordion-item active">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">What size budgets do you typically work with?</h5>
-                  <div className="accordion-bottom">
-                    <p>We typically work with clients within the following project brackets: </p>
-                    <ul className="custom-point grey">
-                      <li>RM2-5k</li>
-                      <li>RM5-10k</li>
-                      <li>RM10-20k</li>
-                      <li>RM25k+</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">How do I figure out how much your services will cost?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">What are the payment terms for a typical project?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">How much does hosting cost?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">Retainer pricing</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* starting a project */}
-            <div className="tabContent" id="startProjectTab">
-              <div className="accordion-wrapper" id="startingProjectAccordion">
-
-                <div className="accordion-item active">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">What size budgets do you typically work with?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">How do I figure out how much your services will cost?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* design */}
-            <div className="tabContent" id="designTab">
-              <div className="accordion-wrapper" id="designAccordion">
-
-                <div className="accordion-item active">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">What size budgets do you typically work with?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">How do I figure out how much your services will cost?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* development */}
-            <div className="tabContent" id="developmentTab">
-              <div className="accordion-wrapper" id="developmentAccordion">
-
-                <div className="accordion-item active">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">What size budgets do you typically work with?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-                <div className="accordion-item">
-                  <div className="input-wrap">
-                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-                    <label>Select</label>
-                  </div>
-                  <h5 className="accordion-top">How do I figure out how much your services will cost?</h5>
-                  <div className="accordion-bottom">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatismolestias culpa in,
-                      recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
-                      consequuntur distinctio corporis earum similique!</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+          <div className="tab-wrapper tabs-result-wrapper triggerElement active">
+            {activeTab === 1 && <Accordion data={pricingAccordionData} accordionId="pricingAccordion" />}
+            {activeTab === 2 && <Accordion data={startProjectAccordionData} accordionId="startProjectAccordion" />}
+            {activeTab === 3 && <Accordion data={developmentAccordionData} accordionId="developmentAccordion" />}
+            {activeTab === 4 && <Accordion data={designAccordionData} accordionId="designAccordion" />}
           </div>
 
         </div>
@@ -1408,94 +1388,7 @@ const Homepage = () => {
       </section>
 
       {/* footer */}
-      <footer className="section footer dark-theme">
-        <div className="container">
-
-          <div className="footer-wrap">
-            <div className="row footer-row footer-row-one">
-              <div className="col-6 no-padding">
-                <div className="footer-logo">
-                  <Link to="/">
-                    <img src={gbsHorizontalLogo} alt="Gravitas Business Solution" />
-                  </Link>
-                </div>
-              </div>
-              <div className="col-6 no-padding">
-                <div className="footer-link-wrapper pt-50-m">
-                  <div className="menu-link-footer">
-                    <div className="label">
-                      <p>Locate us</p>
-                    </div>
-                    <div className="desc">
-                      <p>D-01-01, Menara Mitraland No, 13A, <br /> 
-                      Jalan PJU 5/1, Kota Damansara, <br />
-                      47810 Petaling Jaya, Selangor</p>
-                    </div>
-                  </div>
-                  <div className="menu-link-footer">
-                    <div className="label">
-                      <p>Mail to</p>
-                    </div>
-                    <div className="desc">
-                      <Link to="mailto:hello@gravitas.my">hello@gravitas.my</Link>
-                    </div>
-                  </div>
-                  <div className="menu-link-footer">
-                    <div className="label">
-                      <p>Or call us</p>
-                    </div>
-                    <div className="desc">
-                      <Link to="tel:+60123456789">+60123456789</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row footer-row footer-row-two">
-              <div className="col-6 no-padding">
-                <p className="small">© <script>
-                  document.write(new Date().getFullYear())
-                  </script> Gravitas Integrated. All Rights Reserved.</p>
-              </div>
-              <div className="col-6 no-padding">
-                <div className="footer-socials-wrapper">
-                  <div className="footer-socials-img">
-                    <Link to="/" className="m-hover">
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M13.9999 18.6666C15.2376 18.6666 16.4246 18.1749 17.2998 17.2998C18.1749 16.4246 18.6666 15.2376 18.6666 13.9999C18.6666 12.7622 18.1749 11.5753 17.2998 10.7001C16.4246 9.82492 15.2376 9.33325 13.9999 9.33325C12.7622 9.33325 11.5753 9.82492 10.7001 10.7001C9.82492 11.5753 9.33325 12.7622 9.33325 13.9999C9.33325 15.2376 9.82492 16.4246 10.7001 17.2998C11.5753 18.1749 12.7622 18.6666 13.9999 18.6666Z"
-                          stroke="white" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                        <path
-                          d="M3.5 18.6667V9.33333C3.5 7.78624 4.11458 6.30251 5.20854 5.20854C6.30251 4.11458 7.78624 3.5 9.33333 3.5H18.6667C20.2138 3.5 21.6975 4.11458 22.7915 5.20854C23.8854 6.30251 24.5 7.78624 24.5 9.33333V18.6667C24.5 20.2138 23.8854 21.6975 22.7915 22.7915C21.6975 23.8854 20.2138 24.5 18.6667 24.5H9.33333C7.78624 24.5 6.30251 23.8854 5.20854 22.7915C4.11458 21.6975 3.5 20.2138 3.5 18.6667Z"
-                          stroke="white" strokeWidth="1.25" />
-                        <path d="M20.4167 7.59557L20.4288 7.58228" stroke="white" strokeWidth="1.25" strokeLinecap="round"
-                          strokeLinejoin="round" />
-                      </svg>
-                    </Link>
-                  </div>
-                  <div className="footer-socials-img">
-                    <Link to="/" className="m-hover">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clipPath="url(#clip0_42_1218)">
-                          <path
-                            d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166L20.447 20.452ZM5.337 7.433C5.06588 7.43313 4.79739 7.37979 4.54691 7.27604C4.29642 7.17229 4.06886 7.02015 3.87724 6.82835C3.68562 6.63654 3.5337 6.40883 3.43019 6.15825C3.32668 5.90766 3.27361 5.63912 3.274 5.368C3.2742 4.95978 3.39544 4.56078 3.6224 4.22147C3.84936 3.88216 4.17184 3.61777 4.54907 3.46173C4.92629 3.30569 5.34131 3.26502 5.74165 3.34485C6.14198 3.42469 6.50966 3.62144 6.79817 3.91024C7.08669 4.19903 7.28309 4.5669 7.36254 4.96731C7.44198 5.36773 7.40091 5.78271 7.2445 6.15978C7.0881 6.53685 6.8234 6.85908 6.48387 7.08571C6.14433 7.31234 5.74522 7.4332 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z"
-                            fill="white" />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_42_1218">
-                            <rect width="24" height="24" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </footer>
+      <Footer />
 
 
 
