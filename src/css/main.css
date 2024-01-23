@@ -506,7 +506,7 @@ select {
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  margin-bottom: .5em;
+  margin-bottom: .5em !important;
   text-transform: capitalize;
 }
 
@@ -1337,6 +1337,7 @@ header .ul-mobile .item {
 .swiper-container.team .cards-desc-wrap {
   text-align: center;
   padding: 2em;
+  user-select: none;
 }
 
 .swiper-container.team .cards-desc {
@@ -1355,7 +1356,7 @@ header .ul-mobile .item {
   margin-bottom: 0;
 }
 
-.swiper-container.team .cards-title h4 span {
+.swiper-container.team .cards-title h4 span.firstName {
   font-size: calc(clamp(1.1em, 1.5vw, 1.5em) * 2);
   color: var(--main-color);
 }
