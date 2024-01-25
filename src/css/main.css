@@ -2946,6 +2946,7 @@ main.main-content {
 .form-custom .form-col.form-submit-btn {
   margin-bottom: 0;
   align-items: flex-end;
+  z-index: 2;
 }
 
 .form-row {

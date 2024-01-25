@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import MainLogo from "../../components/Logo/MainLogo";
 
 import previewIcon from "../../assets/img/preview-icon.svg";
+import MagneticHover from "../../components/Functions/MagneticHover";
 
 const Nav = () => {
   // active nav function
@@ -40,16 +41,18 @@ const Nav = () => {
           {/* desktop */}
           <div className="navbar-wrapper">
             <div className="left-navbar">
-              <div className="btn-link btn-nav-home">
-                <NavLink
-                  to="/"
-                  className={`default-btn-click ${
-                    isNavLinkActive("/") ? "active-link" : ""
-                  }`}
-                >
-                  <MainLogo />
-                </NavLink>
-              </div>
+              <MagneticHover>
+                <div className="btn-link btn-nav-home">
+                  <NavLink
+                    to="/"
+                    className={`default-btn-click ${
+                      isNavLinkActive("/") ? "active-link" : ""
+                    }`}
+                  >
+                    <MainLogo />
+                  </NavLink>
+                </div>
+              </MagneticHover>
             </div>
             <div className="middle-navbar link-navbar-wrapper">
               <ul className="link-desktop link-desktop-center">
@@ -111,19 +114,21 @@ const Nav = () => {
               </ul>
             </div>
             <div className="right-navbar link-navbar-wrapper">
-              <ul className="link-desktop link-desktop-right">
-                <li>
-                  <NavLink
-                    to="/contact"
-                    className={
-                      isNavLinkActive("/contact") ? "active-link" : ""
-                    }
-                    data-replace="Hire Us"
-                  >
-                    <span>Hire Us</span>
-                  </NavLink>
-                </li>
-              </ul>
+              <MagneticHover>
+                <ul className="link-desktop link-desktop-right">
+                  <li>
+                    <NavLink
+                      to="/contact"
+                      className={
+                        isNavLinkActive("/contact") ? "active-link" : ""
+                      }
+                      data-replace="Hire Us"
+                    >
+                      <span>Hire Us</span>
+                    </NavLink>
+                  </li>
+                </ul>
+              </MagneticHover>
             </div>
           </div>
 

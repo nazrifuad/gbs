@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import MagneticHover from "../Functions/MagneticHover";
 
 const renderServiceTags = (tags) => {
   return tags.map((tag, index) => (
@@ -41,13 +42,15 @@ const PortfolioCard = ({ title, description, tags, imageUrl, linkTo, usability, 
                 </div>
                 <div className="services-tag">{renderServiceTags(tags)}</div>
                 <div className="flex-center flex-start btn">
-                  <div className="default-btn secondary-btn m-hover">
-                    <Link to={linkTo} className="btn-link">
-                      <div className="btn-text" data-replace="View Case Study">
-                        <span className="inner-btn-text">View Case Study</span>
-                      </div>
-                    </Link>
-                  </div>
+                  <MagneticHover>
+                    <div className="default-btn secondary-btn">
+                      <Link to={linkTo} className="btn-link">
+                        <div className="btn-text" data-replace="View Case Study">
+                          <span className="inner-btn-text">View Case Study</span>
+                        </div>
+                      </Link>
+                    </div>
+                  </MagneticHover>
                 </div>
               </div>
               <div className="col-6">
