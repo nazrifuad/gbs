@@ -671,7 +671,7 @@ header.header.section .navbar .navbar-wrapper>* {
 }
 
 @media only screen and (min-width: 1024px) {
-  .navbar.hidden {
+  header.header-hidden .navbar {
     transform: translateY(-100%);
     opacity: 0;
   }
@@ -1764,6 +1764,7 @@ header .ul-mobile .item {
 .hero-title-wrap {
   position: relative;
   overflow: hidden;
+  user-select: none;
   /* max-width: 65%; */
 }
 
