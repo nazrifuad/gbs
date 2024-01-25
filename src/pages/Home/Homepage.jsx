@@ -39,57 +39,21 @@ import portfolioImg02 from "../../assets/img/portfolio-thumbnail-02.jpg";
 import portfolioImg03 from "../../assets/img/portfolio-thumbnail-03.jpg";
 
 // components
+import useSmoothScroll from "../../components/Functions/useSmoothScroll";
 import Accordion from "../../components/Accordion/Accordion";
 import Footer from "../../components/Footer/Footer";
 import PortfolioCard from "../../components/PortfolioCard/PortfolioCard";
 import SwiperTeam from "../../components/Swiper/SwiperTeam";
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
+import usePinCard from "../../components/Functions/usePinCard";
+import Contact from "../../components/Contact/Contact";
+
 
 const Homepage = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // SMOOTH SCROLLING
-  const locoScrollRef = useRef(null);
-
-  useEffect(() => {
-    // Initialize Locomotive Scroll
-    locoScrollRef.current = new LoconativeScroll({
-      el: document.querySelector("[data-scroll-container]"),
-      scrollToEasing: (t) => (t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2),
-      smooth: true,
-      duration: 0.95,
-    });
-
-    // Set up smooth scrolling
-    locoScrollRef.current.on("scroll", () => {
-      ScrollTrigger.update();
-    });
-
-    // Handle window resize
-    const handleResize = () => {
-      locoScrollRef.current.update();
-      ScrollTrigger.update();
-    };
-
-    // Event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Refresh ScrollTrigger and update LoconativeScroll after setup
-    ScrollTrigger.addEventListener("refresh", () => {
-      locoScrollRef.current.update();
-    });
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      locoScrollRef.current.destroy();
-    };
-  }, []);
-
-  // Initial ScrollTrigger refresh
-  useEffect(() => {
-    ScrollTrigger.refresh();
-  }, []);
+  const locoScroll = useSmoothScroll();
 
   // HERO SECTION
   // change text
@@ -243,6 +207,7 @@ const Homepage = () => {
     const swiper = new Swiper(".swiper.team", {
       slidesPerView: 1,
       spaceBetween: 40,
+      grabCursor: true,
       speed: 1000,
       modules: [Navigation],
       navigation: {
@@ -307,57 +272,7 @@ const Homepage = () => {
 
   // PORTFOLIO SECTION
   // pinning layered
-  useEffect(() => {
-    const initPinningPortfolio = () => {
-      if (window.innerWidth > 1024) {
-        const cardsPinned = gsap.utils.toArray(".portfolio .pinned");
-        const pinningSpacer = 50;
-        const minScalePinned = 0.9;
-
-        const distributorPinned = gsap.utils.distribute({
-          base: minScalePinned,
-          amount: 0.05,
-        });
-
-        cardsPinned.forEach((card, index) => {
-          const scaleVal = distributorPinned(index, card, cardsPinned);
-
-          gsap.to(card, {
-            scrollTrigger: {
-              trigger: card,
-              start: "top 5%",
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-            ease: "none",
-            scale: scaleVal,
-          });
-
-          const start = `top-=${index * pinningSpacer} 5%`;
-          const endTrigger = ".cards-grid.portfolio";
-
-          ScrollTrigger.create({
-            trigger: card,
-            start,
-            endTrigger,
-            end: index < cardsPinned.length - 1 ? `bottom top+=${800 + cardsPinned.length * pinningSpacer}` : `bottom-=${index * pinningSpacer} top+=${800 + cardsPinned.length * pinningSpacer}`,
-            pin: true,
-            pinSpacing: false,
-            id: `pin-${index}`, // unique ID for each ScrollTrigger
-            invalidateOnRefresh: true,
-          });
-        });
-      }
-    };
-
-    // Call the function to initialize pinning portfolio
-    initPinningPortfolio();
-
-    // Clean up when the component unmounts
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
-  }, []); // runs once after the initial render
+  const pinningLayered = usePinCard();
 
   // FAQS SECTION
   // ACCORDION
@@ -890,90 +805,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section id="contact" className="section contact-section dark-theme no-padding" data-scroll-section>
-        <div className="container">
-          <div className="general-heading-wrapper">
-            <div className="sub-description mw-600 mw-full-m mw-full-i">
-              <h3 className="font-white">Let’s talk about you</h3>
-            </div>
-          </div>
-
-          <div className="row contact-row triggerElement">
-            <div className="col-4">
-              <h4>
-                <span className="main-font-gradient">Free</span> consultation
-              </h4>
-              <p className="font-grey">Have a new project in mind? Schedule a 30-minute discovery call or fill out the quick form, and together we'll explore the possibilities.</p>
-              <div className="flex-center flex-start btn">
-                <div className="default-btn secondary-btn m-hover">
-                  <Link to="/" className="btn-link" data-scroll-to>
-                    <div className="btn-text" data-replace="Schedule a Call">
-                      <span className="inner-btn-text">Schedule a Call</span>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-8">
-              <div className="form-wrapper">
-                <div className="form-inner-wrapper">
-                  {/* form */}
-                  <div className="form-wrapper form-two-layout">
-                    <form className="form-custom" action="index.php" method="post">
-                      <div className="form-row">
-                        <div className="form-col">
-                          <label htmlFor="name">Your name</label>
-                          <input id="name" name="name" type="text" placeholder="Type your name" autoComplete="name" required />
-                        </div>
-
-                        <div className="form-col">
-                          <label htmlFor="email">Email</label>
-                          <input id="email" name="email" type="email" placeholder="Type your email" autoComplete="email" required />
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-col">
-                          <label htmlFor="phoneNumber">Phone</label>
-                          <input id="phoneNumber" name="phoneNumber" type="text" placeholder="Type your phone number" />
-                        </div>
-
-                        <div className="form-col">
-                          <label htmlFor="budget">Estimated Budget</label>
-                          <select id="budget" className="custom-select form-select" defaultValue="RM5,000">
-                            <option value="RM5,000">RM5,000</option>
-                            <option value="RM10,000">RM10,000</option>
-                            <option value="RM25,000">RM25,000</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-col">
-                          <label htmlFor="messages">Project Brief</label>
-                          <textarea cols="10" rows="4" id="messages" name="messages" placeholder="Simply explain your project"></textarea>
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-col form-submit-btn">
-                          <div className="default-btn secondary-btn m-hover">
-                            <div className="btn-link">
-                              <button type="submit" className="btn-text" data-replace="Send">
-                                <span className="inner-btn-text">Send</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* contact */}
+      <Contact />
 
       {/* footer */}
       <Footer />

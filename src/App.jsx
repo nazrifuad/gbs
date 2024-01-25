@@ -1,16 +1,19 @@
-import React from 'react'
-import './css/main.css'
-import HeaderRoutes from './components/Routes/HeaderRoutes'
-
+import React from "react";
+import "./css/main.css";
+import HeaderRoutes from "./components/Routes/HeaderRoutes";
+import CustomCursor from "./components/Cursor/CustomCursor";
 
 // main
-function App({children}) {
+function App({ children }) {
   return (
-    <main className="main-content">
-      <HeaderRoutes />
-      {children}
-    </main>
-  )
+    <>
+      <CustomCursor />
+      <main className="main-content">
+        <HeaderRoutes />
+        {children}
+      </main>
+    </>
+  );
 }
 
-export default App
+export default App;

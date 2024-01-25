@@ -25,6 +25,7 @@ PercentageInfo.propTypes = {
 };
 
 const PortfolioCard = ({ title, description, tags, imageUrl, linkTo, usability, userRetention }) => {
+
   return (
     <>
       <div className="cards-wrap pinned">

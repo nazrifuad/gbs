@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MainLogo from "../../components/Logo/MainLogo";
 
@@ -11,9 +11,30 @@ const Nav = () => {
     return location.pathname === path;
   };
 
+  // added class to header when scrolling
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+
+      // Hide the header when scrolling down, show when scrolling up
+      setIsHidden(scrollTop > lastScrollTop);
+      lastScrollTop = scrollTop;
+    };
+
+    let lastScrollTop = 0;
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className="header section nav-mobile-not-active">
+      <header className={`header section nav-mobile-not-active ${isHidden ? "header-hidden" : ""}`}>
         <div id="navbar" className="navbar">
 
           {/* desktop */}
@@ -106,8 +127,6 @@ const Nav = () => {
             </div>
           </div>
 
-
-          
         </div>
       </header>
     </>
