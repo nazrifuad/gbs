@@ -488,11 +488,11 @@ const Homepage = () => {
     <>
       <section id="hero" className="section hero-banner full-height" data-scroll-section>
         <div className="container">
-          {/* <div className="video-overlay">
+          <div className="video-overlay">
             <video playsInline autoPlay loop muted>
               <source src={heroVideo} type="video/mp4" />
             </video>
-          </div> */}
+          </div>
 
           <div className="hero-title-wrap hero-title-reveal mw-full-m mw-full-i text-center">
             <div className="hero-title change-text-wrapper-hero">

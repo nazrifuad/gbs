@@ -6,6 +6,7 @@ import gbsHorizontalLogo from "../../assets/img/full-logo-horizontal.svg";
 // icons
 import IgIcon from "../Icons/IgIcon";
 import LinkedInIcon from "../Icons/LinkedInIcon";
+import MagneticHover from "../Functions/MagneticHover";
 
 const Footer = () => {
   return (
@@ -63,14 +64,18 @@ const Footer = () => {
               <div className="col-6 no-padding">
                 <div className="footer-socials-wrapper">
                   <div className="footer-socials-img">
-                    <Link to="/" className="m-hover">
-                      <IgIcon />
-                    </Link>
+                    <MagneticHover>
+                      <Link to="/">
+                        <IgIcon />
+                      </Link>
+                    </MagneticHover>
                   </div>
                   <div className="footer-socials-img">
-                    <Link to="/" className="m-hover">
-                      <LinkedInIcon />
-                    </Link>
+                    <MagneticHover>
+                      <Link to="/">
+                        <LinkedInIcon />
+                      </Link>
+                    </MagneticHover>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// functions
+import MagneticHover from "../Functions/MagneticHover";
+
 const Contact = () => {
   return (
     <>
@@ -19,13 +22,15 @@ const Contact = () => {
               </h4>
               <p className="font-grey">Have a new project in mind? Schedule a 30-minute discovery call or fill out the quick form, and together we'll explore the possibilities.</p>
               <div className="flex-center flex-start btn">
-                <div className="default-btn secondary-btn m-hover">
-                  <Link to="/" className="btn-link" data-scroll-to>
-                    <div className="btn-text" data-replace="Schedule a Call">
-                      <span className="inner-btn-text">Schedule a Call</span>
-                    </div>
-                  </Link>
-                </div>
+                <MagneticHover>
+                  <div className="default-btn secondary-btn">
+                    <Link to="/" className="btn-link" data-scroll-to>
+                      <div className="btn-text" data-replace="Schedule a Call">
+                        <span className="inner-btn-text">Schedule a Call</span>
+                      </div>
+                    </Link>
+                  </div>
+                </MagneticHover>
               </div>
             </div>
             <div className="col-8">
@@ -71,13 +76,15 @@ const Contact = () => {
 
                       <div className="form-row">
                         <div className="form-col form-submit-btn">
-                          <div className="default-btn secondary-btn m-hover">
-                            <div className="btn-link">
-                              <button type="submit" className="btn-text" data-replace="Send">
-                                <span className="inner-btn-text">Send</span>
-                              </button>
+                          <MagneticHover>
+                            <div className="default-btn secondary-btn">
+                              <div className="btn-link">
+                                <button type="submit" className="btn-text" data-replace="Send">
+                                  <span className="inner-btn-text">Send</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
+                          </MagneticHover>
                         </div>
                       </div>
                     </form>
