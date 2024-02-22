@@ -1,12 +1,10 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Nav from '../../pages/Nav/Nav'
+import Nav from "../../pages/Nav/Nav";
 
-import NoPage from '../../pages/NoPage/NoPage'
-import Homepage from '../../pages/Home/Homepage'
-
-
+import NoPage from "../../pages/NoPage/NoPage";
+import Homepage from "../../pages/Home/Homepage";
 
 // header routing
 const HeaderRoutes = () => {
@@ -20,9 +18,7 @@ const HeaderRoutes = () => {
         </Routes>
       </>
     </Router>
-  )
-}
+  );
+};
 
-export default HeaderRoutes
-
-
+export default HeaderRoutes;

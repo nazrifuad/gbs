@@ -1,3 +1,95 @@
+/* ------------------------- Modal -------------------------------------------------- */
+
+.modal-section {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #111111d4;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.15s, opacity 0.15s 0s, transform 0.15s;
+  z-index: 999;
+}
+
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-item {
+  position: relative;
+  padding: 3em 10em;
+  background-color: var(--black-lighter-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--grey-color);
+  overflow: hidden;
+}
+
+@media only screen and (min-width: 1024px) {
+  .modal-item {
+    min-width: 55em;
+  }
+}
+
+.modal-item .desc-wrap {
+  text-align: center;
+}
+
+.modal-item .search-details,
+.modal-item .search-details input {
+  width: 100%;
+}
+
+.modal-item .search-details input {
+  padding: .5em 1em;
+}
+
+.modal-item .close-button {
+  position: absolute;
+  top: 0;
+  right: 3%;
+  padding-top: 1em;
+}
+
+.modal-item .close-button img {
+  cursor: pointer;
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.15s 0s, transform 0.15s;
+}
+
+/* item layout on modal */
+.input-wrapper .item.flex-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-wrapper .item:not(:last-child) {
+  margin-bottom: 2em;
+}
+
+.input-wrapper .item .platform {
+  display: flex;
+  gap: var(--small-gap);
+  align-items: center;
+}
+
+.input-wrapper .item .img-icon svg {
+  position: relative;
+  width: 1.15em;
+  height: 1.15em;
+  overflow: hidden;
+}
 
 
 /* ------------------------- Preloader -------------------------------------------------- */
@@ -777,9 +869,10 @@ header.header-scrolled .middle-navbar svg {
   text-transform: capitalize;
   transition: var(--smooth-transition);
   overflow: hidden;
+  cursor: pointer;
 }
 
-.link-navbar-wrapper .link-desktop li a.active {
+.link-navbar-wrapper .link-desktop:not(.link-desktop-right) li a.active {
   background: linear-gradient(90deg, var(--main-color) 0%, var(--secondary-color) 40%);
   background-size: 200% auto;
   -webkit-background-size: 200% auto;
@@ -1050,7 +1143,7 @@ header .ul-mobile .item {
     transition: transform var(--slow-transition) .18s;
   }
 
-  header .ul-mobile a.mobile-link.nav-active:before {
+  header .ul-mobile a.mobile-link.active:before {
     content: '';
     position: absolute;
     top: 49%;
@@ -1996,6 +2089,7 @@ header .ul-mobile .item {
 
 .custom-point.grey li {
   color: var(--grey-color);
+  list-style: none !important;
 }
 
 
@@ -2990,7 +3084,7 @@ main.main-content {
   background: transparent;
   font-size: 1em;
   font-family: 'Satoshi, Medium', sans-serif;
-  transition: var(--smooth-transition);
+  /* transition: var(--smooth-transition); */
 }
 
 .form-custom .form-col :is(select) {
