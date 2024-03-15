@@ -87,9 +87,14 @@
 	box-sizing: border-box;
 }
 
+/* scrollbar */
+body::-webkit-scrollbar {
+	display: none;
+}
+
 
 /* Works on Firefox */
-* {
+/* * {
 	scrollbar-width: thin;
 	scrollbar-color: var(--main-color) var(--transparent-color);
 }
@@ -108,7 +113,7 @@
 *::-webkit-scrollbar-thumb {
 	background: var(--main-color);
 	border-radius: .5em;
-}
+} */
 
 
 li,
@@ -339,7 +344,7 @@ a {
 
 /* ------------------------- Main Elements -------------------------------------------------- */
 
-.section {
+.section, .subsection {
 	position: relative;
 	display: block;
 	padding-top: var(--section-padding);

@@ -65,14 +65,14 @@ const Footer = () => {
                 <div className="footer-socials-wrapper">
                   <div className="footer-socials-img">
                     <MagneticHover>
-                      <Link to="/">
+                      <Link to="https://www.instagram.com/gravitas.my/" target="_blank">
                         <IgIcon />
                       </Link>
                     </MagneticHover>
                   </div>
                   <div className="footer-socials-img">
                     <MagneticHover>
-                      <Link to="/">
+                      <Link to="https://my.linkedin.com/company/gravitas-my" target="_blank">
                         <LinkedInIcon />
                       </Link>
                     </MagneticHover>

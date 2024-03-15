@@ -1,41 +1,83 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+// import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link as ScrollLink, Events, scrollSpy } from 'react-scroll';
+import { useLocation } from "react-router-dom";
 import MainLogo from "../../components/Logo/MainLogo";
 
 import previewIcon from "../../assets/img/preview-icon.svg";
 import MagneticHover from "../../components/Functions/MagneticHover";
 
 const Nav = () => {
-  // active nav function
-  const location = useLocation();
-  const isNavLinkActive = (path) => {
-    return location.pathname === path;
-  };
 
-  // added class to header when scrolling
+  const location = useLocation();
+  const [activeSection, setActiveSection] = useState("");
   const [isHidden, setIsHidden] = useState(false);
+  const [isMobileNavActive, setMobileNavActive] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-
-      // Hide the header when scrolling down, show when scrolling up
-      setIsHidden(scrollTop > lastScrollTop);
-      lastScrollTop = scrollTop;
+    const handleScrollEnd = (to) => {
+      setActiveSection(to);
     };
 
-    let lastScrollTop = 0;
+    Events.scrollEvent.register("end", handleScrollEnd);
 
-    window.addEventListener("scroll", handleScroll);
+    scrollSpy.update();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      Events.scrollEvent.remove("end");
     };
   }, []);
 
+  const isNavLinkActive = (path) => {
+    return location.pathname === path || activeSection.includes(path);
+  };
+
+  const handleSetActive = (to) => {
+    setActiveSection(to);
+  };
+
+  const openMobileNav = () => {
+    setMobileNavActive(true);
+    document.body.classList.add("modal-open");
+  };
+
+  const closeMobileNav = () => {
+    setMobileNavActive(false);
+    document.body.classList.remove("modal-open");
+  };
+
+  const handleLinkClick = () => {
+    closeMobileNav();
+    // Remove the modal-open class when a mobile link is clicked
+    document.body.classList.remove("modal-open");
+  };
+
+
+      // added class to header when scrolling
+      useEffect(() => {
+        const handleScroll = () => {
+          const scrollTop = window.scrollY;
+    
+          // Hide the header when scrolling down, show when scrolling up
+          setIsHidden(scrollTop > lastScrollTop);
+          lastScrollTop = scrollTop;
+        };
+    
+        let lastScrollTop = 0;
+    
+        window.addEventListener("scroll", handleScroll);
+    
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }, []);
+
+  
+  
+
   return (
     <>
-      <header className={`header section nav-mobile-not-active ${isHidden ? "header-hidden" : ""}`}>
+      <header className={`header section ${isMobileNavActive ? 'nav-mobile-active' : 'nav-mobile-not-active'} ${isHidden ? "header-hidden" : ""}`}>
         <div id="navbar" className="navbar">
 
           {/* desktop */}
@@ -43,73 +85,111 @@ const Nav = () => {
             <div className="left-navbar">
               <MagneticHover>
                 <div className="btn-link btn-nav-home">
-                  <NavLink
+                  <ScrollLink
+                    to="/"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    className={`default-btn-click ${
+                      isNavLinkActive("/") ? "active-link" : ""
+                    }`}
+                    onSetActive={() => handleSetActive("/")}
+                  >
+                    <MainLogo />
+                  </ScrollLink>
+                  {/* <NavLink
                     to="/"
                     className={`default-btn-click ${
                       isNavLinkActive("/") ? "active-link" : ""
                     }`}
                   >
                     <MainLogo />
-                  </NavLink>
+                  </NavLink> */}
                 </div>
               </MagneticHover>
             </div>
             <div className="middle-navbar link-navbar-wrapper">
               <ul className="link-desktop link-desktop-center">
                 <li className="gbs">
-                  <NavLink
-                    to="/"
+                  <ScrollLink
+                    to="hero"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                     className={
-                      isNavLinkActive("/") ? "active-link" : ""
+                      isNavLinkActive("hero") ? "active-link" : ""
                     }
                     data-replace="GBS"
+                    onSetActive={() => handleSetActive("hero")}
                   >
                     <span>GBS</span>
-                  </NavLink>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/about"
+                  <ScrollLink
+                    to="about-us"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                     className={
-                      isNavLinkActive("/about") ? "active-link" : ""
+                      isNavLinkActive("about-us") ? "active-link" : ""
                     }
                     data-replace="About"
+                    onSetActive={() => handleSetActive("about-us")}
                   >
                     <span>About</span>
-                  </NavLink>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/portfolio"
+                  <ScrollLink
+                    to="portfolio"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                     className={
-                      isNavLinkActive("/portfolio") ? "active-link" : ""
+                      isNavLinkActive("portfolio") ? "active-link" : ""
                     }
                     data-replace="Portfolio"
+                    onSetActive={() => handleSetActive("portfolio")}
                   >
                     <span>Portfolio</span>
-                  </NavLink>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/faqs"
+                  <ScrollLink
+                    to="faqs"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                     className={
-                      isNavLinkActive("/faqs") ? "active-link" : ""
+                      isNavLinkActive("faqs") ? "active-link" : ""
                     }
                     data-replace="FAQs"
+                    onSetActive={() => handleSetActive("faqs")}
                   >
                     <span>FAQs</span>
-                  </NavLink>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/contact"
+                  <ScrollLink
+                    to="contact"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                     className={
-                      isNavLinkActive("/contact") ? "active-link" : ""
+                      isNavLinkActive("contact") ? "active-link" : ""
                     }
                     data-replace="Contact"
+                    onSetActive={() => handleSetActive("contact")}
                   >
                     <span>Contact</span>
-                  </NavLink>
+                  </ScrollLink>
                 </li>
               </ul>
             </div>
@@ -117,19 +197,104 @@ const Nav = () => {
               <MagneticHover>
                 <ul className="link-desktop link-desktop-right">
                   <li>
-                    <NavLink
-                      to="/contact"
+                    <ScrollLink
+                      to="contact"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
                       className={
-                        isNavLinkActive("/contact") ? "active-link" : ""
+                        isNavLinkActive("contact") ? "active-link" : ""
                       }
                       data-replace="Hire Us"
+                      onSetActive={() => handleSetActive("contact")}
                     >
                       <span>Hire Us</span>
-                    </NavLink>
+                    </ScrollLink>
                   </li>
                 </ul>
               </MagneticHover>
             </div>
+
+            {/* mobile nav hamburger */}
+            <div className="navbar-mobile">
+              <div className="hamburger-wrap">
+                <div className="hamburger" data-toggle="modal-nav-mobile" onClick={() => isMobileNavActive ? closeMobileNav() : openMobileNav()}>
+                  <div className="hamburger-bar"></div>
+                  <div className="hamburger-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          {/* mobile nav */}
+          <div className="modal-nav-mobile">
+            <div className="modal-block">
+              <div className="modal-block-background"></div>
+              <div className="ul-mobile-wrapper">
+                <div id="ul-mobile" className="ul-mobile">
+                  <div className="item">
+                    <ScrollLink
+                      to="about-us"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      className={`mobile-link ${isNavLinkActive("about-us") ? "active-link" : ""}`}
+                      onClick={handleLinkClick}
+                      onSetActive={() => handleSetActive("about-us")}
+                    >
+                      <span>About</span>
+                    </ScrollLink>
+                    {/* <a href="#about-us" className="mobile-link nav-active" data-scroll-to>about</a> */}
+                  </div>
+                  <div className="item"> 
+                    <ScrollLink
+                      to="portfolio"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      className={`mobile-link ${isNavLinkActive("portfolio") ? "active-link" : ""}`}
+                      onClick={handleLinkClick}
+                      onSetActive={() => handleSetActive("portfolio")}
+                    >
+                      <span>Portfolio</span>
+                    </ScrollLink>
+                  </div>
+                  <div className="item">
+                    <ScrollLink
+                      to="faqs"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      className={`mobile-link ${isNavLinkActive("faqs") ? "active-link" : ""}`}
+                      onClick={handleLinkClick}
+                      onSetActive={() => handleSetActive("faqs")}
+                    >
+                      <span>FAQs</span>
+                    </ScrollLink>
+                  </div>
+                  <div className="item">
+                    <ScrollLink
+                      to="contact"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      className={`mobile-link ${isNavLinkActive("contact") ? "active-link" : ""}`}
+                      onClick={handleLinkClick}
+                      onSetActive={() => handleSetActive("contact")}
+                    >
+                      <span>Contact</span>
+                    </ScrollLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-nav-background" data-close="modal" onClick={handleLinkClick}></div>
           </div>
 
         </div>
@@ -139,3 +304,5 @@ const Nav = () => {
 };
 
 export default Nav;
+
+
