@@ -14,7 +14,7 @@ const useSmoothScroll = () => {
       el: document.querySelector("[data-scroll-container]"),
       scrollToEasing: (t) => (t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2),
       smooth: true,
-      duration: 0.95,
+      duration: 0.65,
     });
 
     locoScrollRef.current.on("scroll", () => {
