@@ -35,7 +35,7 @@
 	--white-color: #ffffff;
 
 	--bg-blur: rgba(255, 255, 255, 0.16);
-	--bg-blur-darker: #1d1d1d;
+	--bg-blur-darker: rgba(29, 29, 29, 0.65);
 	--transparent-color: rgba(0, 0, 0, 0);
 
 	--alert-failed-color: #951818;
@@ -87,9 +87,14 @@
 	box-sizing: border-box;
 }
 
+/* scrollbar */
+body::-webkit-scrollbar {
+	display: none;
+}
+
 
 /* Works on Firefox */
-* {
+/* * {
 	scrollbar-width: thin;
 	scrollbar-color: var(--main-color) var(--transparent-color);
 }
@@ -108,7 +113,7 @@
 *::-webkit-scrollbar-thumb {
 	background: var(--main-color);
 	border-radius: .5em;
-}
+} */
 
 
 li,
@@ -339,7 +344,7 @@ a {
 
 /* ------------------------- Main Elements -------------------------------------------------- */
 
-.section {
+.section, .subsection {
 	position: relative;
 	display: block;
 	padding-top: var(--section-padding);

@@ -8,8 +8,6 @@ import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 import { Navigation } from "swiper/modules";
 
-import LoconativeScroll from "loconative-scroll";
-
 import heroVideo from "../../assets/img/hero-video-overlay.mp4";
 
 import bluesharkLogo from "../../assets/img/BLUESHARK.png";
@@ -48,16 +46,58 @@ import FeatureCard from "../../components/FeatureCard/FeatureCard";
 import usePinCard from "../../components/Functions/usePinCard";
 import Contact from "../../components/Contact/Contact";
 
-
 const Homepage = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // SMOOTH SCROLLING
   const locoScroll = useSmoothScroll();
 
+  // TRIGGER ELEMENT
+  useEffect(() => {
+    gsap.utils.toArray(".triggerElement").forEach((el) => {
+      gsap.fromTo(el, {
+        opacity: 0,
+        y: 30
+        },
+        {
+        opacity: 1,
+        y: 0,
+        ease: "power4.inOut",
+        duration: 1,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          end: "bottom 20%",
+          // toggleActions: "play none none none",
+          // markers: true,
+        },
+      });
+    });
+  }, []);
+
   // HERO SECTION
   // change text
   const targetsRef = useRef([]);
+
+  // video scrolling
+  useEffect(() => {
+    const heroAnimation = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero-banner", // Set the trigger element
+        start: "top top", // Start the animation when the top of the trigger element hits the center of the viewport
+        end: "bottom center", // End the animation when the bottom of the trigger element hits the center of the viewport
+        scrub: 2, // Smoothly scrub through values
+        markers: false, //
+      },
+    });
+    heroAnimation.to(".video-overlay", { scale: 4, opacity: 0 });
+
+    // Ensure to cancel any animations and remove event listeners when the component unmounts
+    return () => {
+      gsap.killTweensOf(".video-overlay");
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
+  }, []); // runs once after the initial render
 
   useEffect(() => {
     const initChangeTextHero = () => {
@@ -191,16 +231,15 @@ const Homepage = () => {
   // TEAM SECTION
   // team data info
   const teamMembers = [
-    { firstName: 'Syafeeq', secName: 'Zaki', position: 'Chief Executive Officer', image: syafeeq },
-    { firstName: 'Ke Yang', secName: 'Yong', position: 'Senior Developer', image: keyang },
-    { firstName: 'Fitri', secName: 'Afiq', position: 'Web Developer', image: fitri },
-    { firstName: 'Fatima', secName: 'Hanim', position: 'Web Developer', image: hanim },
-    { firstName: 'Yasmeen', secName: 'Zaipul', position: 'Web Developer', image: yasmeen },
-    { firstName: 'Nazri', secName: 'Fuad', position: 'Web Developer', image: nazri },
-    { firstName: 'James', secName: 'Lee', position: 'Web Developer', image: james },
-    { firstName: 'Amalia', secName: 'Natasha', position: 'Web Developer', image: amalia },
-    { firstName: 'Dayang', secName: 'Zahira', position: 'Web Developer', image: dayang },
-    
+    { firstName: "Syafeeq", secName: "Zaki", position: "Chief Executive Officer", image: syafeeq },
+    { firstName: "Ke Yang", secName: "Yong", position: "Senior Developer", image: keyang },
+    { firstName: "Fitri", secName: "Afiq", position: "Web Developer", image: fitri },
+    { firstName: "Fatima", secName: "Hanim", position: "Web Developer", image: hanim },
+    { firstName: "Yasmeen", secName: "Zaipul", position: "Web Developer", image: yasmeen },
+    { firstName: "Nazri", secName: "Fuad", position: "Web Developer", image: nazri },
+    { firstName: "James", secName: "Lee", position: "Web Developer", image: james },
+    { firstName: "Amalia", secName: "Natasha", position: "Web Developer", image: amalia },
+    { firstName: "Dayang", secName: "Zahira", position: "Web Developer", image: dayang },
   ];
   // team slider
   useEffect(() => {
@@ -526,7 +565,6 @@ const Homepage = () => {
             </div>
             <div className="hero-title-below">
               <h1 className="font-white">
-                {" "}
                 Into <span className="main-font-gradient"> Realities</span>
               </h1>
             </div>
@@ -564,37 +602,40 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section id="about-us" className="section trusted-section" data-scroll-section>
-        <div className="container full-width">
-          <div className="general-heading-wrapper">
-            <div className="general-big-desc text-center">
-              <h5 className="main-font-gradient">Trusted by</h5>
-            </div>
-          </div>
+      <section id="about-us" className="section about-section" data-scroll-section>
 
-          {/* clients */}
-          <div className="marquee-box marquee-client">
-            <div className="marquee-container" data-marquee-direction="left" data-marquee-status="normal" data-marquee-speed="30">
-              <div className="marquee-wrapper">
-                <div className="marquee-inner-wrapper" data-scroll data-scroll-direction="horizontal" data-scroll-speed="3">
-                  <div className="marquee-inner-wrap">
-                    <div className="marquee-item">
-                      <img src={bluesharkLogo} alt="Blueshark" className="imgtoWhite" />
-                    </div>
-                    <div className="marquee-item">
-                      <img src={fxcLogo} alt="FXC" className="imgtoWhite" />
-                    </div>
-                    <div className="marquee-item">
-                      <img src={mesraLogo} alt="Mesra" className="imgtoWhite" />
-                    </div>
-                    <div className="marquee-item">
-                      <img src={prudentialLogo} alt="PRUDENTIAL" className="imgtoWhite" />
-                    </div>
-                    <div className="marquee-item">
-                      <img src={pulseLogo} alt="PULSE" className="imgtoWhite" />
-                    </div>
-                    <div className="marquee-item">
-                      <img src={sgsupportLogo} alt="SG Support" className="imgtoWhite" />
+        <div className="subsection trusted-section">
+          <div className="container full-width">
+            <div className="general-heading-wrapper">
+              <div className="general-big-desc text-center">
+                <h5 className="main-font-gradient">Trusted by</h5>
+              </div>
+            </div>
+
+            {/* clients */}
+            <div className="marquee-box marquee-client">
+              <div className="marquee-container" data-marquee-direction="left" data-marquee-status="normal" data-marquee-speed="30">
+                <div className="marquee-wrapper">
+                  <div className="marquee-inner-wrapper" data-scroll data-scroll-direction="horizontal" data-scroll-speed="3">
+                    <div className="marquee-inner-wrap">
+                      <div className="marquee-item">
+                        <img src={bluesharkLogo} alt="Blueshark" className="imgtoWhite" />
+                      </div>
+                      <div className="marquee-item">
+                        <img src={fxcLogo} alt="FXC" className="imgtoWhite" />
+                      </div>
+                      <div className="marquee-item">
+                        <img src={mesraLogo} alt="Mesra" className="imgtoWhite" />
+                      </div>
+                      <div className="marquee-item">
+                        <img src={prudentialLogo} alt="PRUDENTIAL" className="imgtoWhite" />
+                      </div>
+                      <div className="marquee-item">
+                        <img src={pulseLogo} alt="PULSE" className="imgtoWhite" />
+                      </div>
+                      <div className="marquee-item">
+                        <img src={sgsupportLogo} alt="SG Support" className="imgtoWhite" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -602,113 +643,115 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-      </section>
 
-      <section id="about-us" className="section about-section pt-unset pt-unset-i" data-scroll-section>
-        <div className="container small">
-          {/* overlay gradient img */}
-          <div className="overlay-img-parent why" ref={rotateImgTriggerWhyRef}>
-            <div className="img-overlay-wrap" data-scroll="" data-scroll-speed="1.8" data-scroll-position="center">
-              <img src={gradImg03} alt="Gravitas" ref={rotateImgElementWhyRef} />
-            </div>
-          </div>
-
-          <div className="general-heading-wrapper general-border">
-            <div className="subheader-wrapper text-center triggerElement">
-              <h5 className="main-font-gradient">Why choose us</h5>
-            </div>
-            <div className="sub-description text-center triggerElement">
-              <p className="big">We stay on the forefront of technological advancements, ensuring that our clients benefit from the latest innovations in the industry.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about-us" className="section why-section pt-unset-i" data-scroll-section>
-        <div className="container">
-          <div className="row">
-            <div className="col-4">
-              <div className="general-heading-wrapper">
-                <div className="sub-description mw-300 mw-full-m mw-full-i">
-                  <h3 className="font-white">Why work with us</h3>
-                </div>
+        <div className="subsection why-choose-section pt-unset pt-unset-i">
+          <div className="container small">
+            {/* overlay gradient img */}
+            <div className="overlay-img-parent why" ref={rotateImgTriggerWhyRef}>
+              <div className="img-overlay-wrap" data-scroll="" data-scroll-speed="1.8" data-scroll-position="center">
+                <img src={gradImg03} alt="Gravitas" ref={rotateImgElementWhyRef} />
               </div>
             </div>
-            <div className="col-8">
-              <div className="cards-grid about triggerElement">
-                
-                <FeatureCard title="Results-Driven" description="Our solutions are designed to drive measurable improvements in your business performance." />
-                <FeatureCard title="Dedicated Team" description="Our team is made up of experienced professionals who are passionate about technology and dedicated to your success." />
-                <FeatureCard title="Cutting-Edge Solutions" description="We stay on the forefront of technological advancements, ensuring that our clients benefit from the latest innovations in the industry." />
-                
+
+            <div className="general-heading-wrapper general-border">
+              <div className="subheader-wrapper text-center triggerElement">
+                <h5 className="main-font-gradient">Why choose us</h5>
+              </div>
+              <div className="sub-description text-center triggerElement">
+                <p className="big">We stay on the forefront of technological advancements, ensuring that our clients benefit from the latest innovations in the industry.</p>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section id="about-us" className="section team-section pt-unset" data-scroll-section>
-        <div className="container">
-          <div className="general-heading-wrapper">
-            <div className="subheader-wrapper text-center">
-              <h5 className="main-font-gradient">Our team</h5>
-            </div>
-            <div className="sub-description mw-600 text-center mw-full-m mw-full-i">
-              <h3 className="font-white">Meet the people that make it happen</h3>
-            </div>
-          </div>
-
-          <div className="swiper-container team">
-            <div className="swiper team" data-scroll="" data-scroll-direction="horizontal" data-scroll-speed="2" data-cursor-text="drag">
-              <div className="swiper-wrapper">
-                {teamMembers.map((member, index) => (
-                  <SwiperTeam key={index} {...member} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about-us" className="section expertise-section" data-scroll-section>
-        <div className="container">
-          {/* gradient bg */}
-          <div className="gradient-element-wrapper">
-            <div className="gradient-element center-big"></div>
-            <div className="grid-img">
-              <img src={gridBg} alt="Gravitas Integrated" />
-            </div>
-          </div>
-
-          {/* overlay gradient img */}
-          <div className="overlay-img-parent expertise" ref={rotateImgTriggerExpertiseRef}>
-            <div className="img-overlay-wrap" data-scroll="" data-scroll-speed="1.5" data-scroll-position="center">
-              <img src={gradImg01} alt="Gravitas Integrated" ref={rotateImgElementExpertiseRef} />
-            </div>
-          </div>
-
-          <div className="general-heading-wrapper">
-            <div className="subheader-wrapper text-center">
-              <h5 className="main-font-gradient">Expertise</h5>
-            </div>
-            <div className="sub-description text-center">
-              <div className="top">
-                <h3 className="font-white mb-unset">Our people are expert in</h3>
-              </div>
-              <div className="change-text-wrapper">
-                <div className="change-text text-slide">
-                  <h3 className="font-white main-font-gradient"> Technology at the Heart </h3>
+        <div className="subsection why-work-section pt-unset-i">
+          <div className="container">
+            <div className="row">
+              <div className="col-4">
+                <div className="general-heading-wrapper">
+                  <div className="sub-description mw-300 mw-full-m mw-full-i">
+                    <h3 className="font-white">Why work with us</h3>
+                  </div>
                 </div>
-                <div className="change-text text-slide">
-                  <h3 className="font-white main-font-gradient"> Industry Knowledge </h3>
-                </div>
-                <div className="change-text text-slide">
-                  <h3 className="font-white main-font-gradient"> Comprehensive Services </h3>
+              </div>
+              <div className="col-8">
+                <div className="cards-grid about triggerElement">
+                  <FeatureCard title="Results-Driven" description="Our solutions are designed to drive measurable improvements in your business performance." />
+                  <FeatureCard title="Dedicated Team" description="Our team is made up of experienced professionals who are passionate about technology and dedicated to your success." />
+                  <FeatureCard
+                    title="Cutting-Edge Solutions"
+                    description="We stay on the forefront of technological advancements, ensuring that our clients benefit from the latest innovations in the industry."
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="subsection team-section pt-unset">
+          <div className="container">
+            <div className="general-heading-wrapper">
+              <div className="subheader-wrapper text-center">
+                <h5 className="main-font-gradient">Our team</h5>
+              </div>
+              <div className="sub-description mw-600 text-center mw-full-m mw-full-i">
+                <h3 className="font-white">Meet the people that make it happen</h3>
+              </div>
+            </div>
+
+            <div className="swiper-container team">
+              <div className="swiper team" data-scroll="" data-scroll-direction="horizontal" data-scroll-speed="2" data-cursor-text="drag">
+                <div className="swiper-wrapper">
+                  {teamMembers.map((member, index) => (
+                    <SwiperTeam key={index} {...member} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="subsection expertise-section">
+          <div className="container">
+            {/* gradient bg */}
+            <div className="gradient-element-wrapper">
+              <div className="gradient-element center-big"></div>
+              <div className="grid-img">
+                <img src={gridBg} alt="Gravitas Integrated" />
+              </div>
+            </div>
+
+            {/* overlay gradient img */}
+            <div className="overlay-img-parent expertise" ref={rotateImgTriggerExpertiseRef}>
+              <div className="img-overlay-wrap" data-scroll="" data-scroll-speed="1.5" data-scroll-position="center">
+                <img src={gradImg01} alt="Gravitas Integrated" ref={rotateImgElementExpertiseRef} />
+              </div>
+            </div>
+
+            <div className="general-heading-wrapper">
+              <div className="subheader-wrapper text-center">
+                <h5 className="main-font-gradient">Expertise</h5>
+              </div>
+              <div className="sub-description text-center">
+                <div className="top">
+                  <h3 className="font-white mb-unset">Our people are expert in</h3>
+                </div>
+                <div className="change-text-wrapper">
+                  <div className="change-text text-slide">
+                    <h3 className="font-white main-font-gradient"> Technology at the Heart </h3>
+                  </div>
+                  <div className="change-text text-slide">
+                    <h3 className="font-white main-font-gradient"> Industry Knowledge </h3>
+                  </div>
+                  <div className="change-text text-slide">
+                    <h3 className="font-white main-font-gradient"> Comprehensive Services </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <section id="portfolio" className="section portfolio-section" data-scroll-section>
@@ -720,7 +763,6 @@ const Homepage = () => {
           </div>
 
           <div className="cards-grid portfolio">
-
             <PortfolioCard
               title="Digital Product Design Solution"
               description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
@@ -748,13 +790,12 @@ const Homepage = () => {
             <PortfolioCard
               title="Félix Péault – Portfolio"
               description="Leading Bitcoin Data and Stats site. Live price action, monitor on-chain data, and track key economic indicators."
-              tags={['Branding', 'Web Design']}
+              tags={["Branding", "Web Design"]}
               imageUrl={portfolioImg02}
               linkTo="/inner-portfolio"
               usability={75}
               userRetention={60}
             />
-
           </div>
         </div>
       </section>
