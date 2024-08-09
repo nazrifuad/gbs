@@ -569,7 +569,7 @@ const Homepage = () => {
               </h1>
             </div>
             <div className="hero-desc">
-              <p className="big font-grey">Your Future, Powered by GBS Tech</p>
+              <p className="big font-grey">Your Future, Powered by GBS Technology</p>
             </div>
           </div>
 
