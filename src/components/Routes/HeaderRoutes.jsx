@@ -1,10 +1,10 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Nav from "../../pages/Nav/Nav";
 
-import NoPage from "../../pages/NoPage/NoPage";
-import Homepage from "../../pages/Home/Homepage";
+import NoPage from "../../pages/NoPage";
+import Homepage from "../../pages/Home";
+import PortfolioTemplate from "../../pages/PortfolioTemplate";
 
 // header routing
 const HeaderRoutes = () => {
@@ -15,6 +15,7 @@ const HeaderRoutes = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="/portfolio/:slug" element={<PortfolioTemplate />} />
         </Routes>
       </>
     </Router>
