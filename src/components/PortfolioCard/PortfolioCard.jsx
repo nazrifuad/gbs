@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import MagneticHover from "../Functions/MagneticHover";
 
 const renderServiceTags = (tags) => {
-    console.log(tags);
     return tags.map((tag, index) => (
         <div key={index} className="subheader-wrapper general-border third-border">
             <h6>{tag.title}</h6>
@@ -73,7 +72,6 @@ const PortfolioCard = ({ title, description, tags, imageUrl, linkTo, usability, 
 PortfolioCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    // tags: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(
         PropTypes.shape({
             title: PropTypes.string.isRequired,

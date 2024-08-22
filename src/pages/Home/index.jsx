@@ -32,49 +32,17 @@ import gridBg from "../../assets/img/grid-bg.png";
 import gradImg01 from "../../assets/img/gradient-element-01.png";
 import gradImg02 from "../../assets/img/gradient-element-02.png";
 
-import portfolioImg01 from "../../assets/img/portfolio-thumbnail.png";
-import portfolioImg02 from "../../assets/img/portfolio-thumbnail-02.jpg";
-import portfolioImg03 from "../../assets/img/portfolio-thumbnail-03.jpg";
-
 // components
-import useSmoothScroll from "../../components/Functions/useSmoothScroll";
 import Accordion from "../../components/Accordion/Accordion";
-import Footer from "../../components/Footer/Footer";
-import PortfolioCard from "../../components/PortfolioCard/PortfolioCard";
 import SwiperTeam from "../../components/Swiper/SwiperTeam";
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
 import usePinCard from "../../components/Functions/usePinCard";
 import Contact from "../../components/Contact/Contact";
 import CardStack from "../../components/Portfolio/cardStack";
+import FaqSection from "../../components/Faq/faqSection";
 
 const Homepage = () => {
   gsap.registerPlugin(ScrollTrigger);
-
-  // SMOOTH SCROLLING
-  const locoScroll = useSmoothScroll();
-
-  // TRIGGER ELEMENT
-  useEffect(() => {
-    gsap.utils.toArray(".triggerElement").forEach((el) => {
-      gsap.fromTo(el, {
-        opacity: 0,
-        y: 30
-        },
-        {
-        opacity: 1,
-        y: 0,
-        ease: "power4.inOut",
-        duration: 1,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          end: "bottom 20%",
-          // toggleActions: "play none none none",
-          // markers: true,
-        },
-      });
-    });
-  }, []);
 
   // HERO SECTION
   // change text
@@ -318,138 +286,138 @@ const Homepage = () => {
   // ACCORDION
   // tabs
   // State to track the active tab
-  const [activeTab, setActiveTab] = useState(1);
+  // const [activeTab, setActiveTab] = useState(1);
 
   // Handle tab click
-  const handleTabClick = (tabNumber, e) => {
-    e.preventDefault();
-    setActiveTab(tabNumber);
-  };
+  // const handleTabClick = (tabNumber, e) => {
+  //   e.preventDefault();
+  //   setActiveTab(tabNumber);
+  // };
 
   // Content for each tab
-  const pricingAccordionData = [
-    {
-      question: "What size budgets do you typically work with?",
-      answer: (
-        <div>
-          <p>We typically work with clients within the following project brackets: </p>
-          <ul className="custom-point grey">
-            <li>RM2-5k</li>
-            <li>RM5-10k</li>
-            <li>RM10-20k</li>
-            <li>RM25k+</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      question: "How do I figure out how much your services will cost?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-    {
-      question: "What are the payment terms for a typical project?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-    {
-      question: "How much does hosting cost?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-    {
-      question: "Retainer pricing",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-  ];
+  // const pricingAccordionData = [
+  //   {
+  //     question: "What size budgets do you typically work with?",
+  //     answer: (
+  //       <div>
+  //         <p>We typically work with clients within the following project brackets: </p>
+  //         <ul className="custom-point grey">
+  //           <li>RM2-5k</li>
+  //           <li>RM5-10k</li>
+  //           <li>RM10-20k</li>
+  //           <li>RM25k+</li>
+  //         </ul>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "How do I figure out how much your services will cost?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "What are the payment terms for a typical project?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "How much does hosting cost?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "Retainer pricing",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
-  const startProjectAccordionData = [
-    {
-      question: "What size budgets do you typically work with?",
-      answer: (
-        <div>
-          <p>We typically work with clients within the following project brackets: </p>
-          <ul className="custom-point grey">
-            <li>RM2-5k</li>
-            <li>RM5-10k</li>
-            <li>RM10-20k</li>
-            <li>RM25k+</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      question: "How do I figure out how much your services will cost?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-  ];
+  // const startProjectAccordionData = [
+  //   {
+  //     question: "What size budgets do you typically work with?",
+  //     answer: (
+  //       <div>
+  //         <p>We typically work with clients within the following project brackets: </p>
+  //         <ul className="custom-point grey">
+  //           <li>RM2-5k</li>
+  //           <li>RM5-10k</li>
+  //           <li>RM10-20k</li>
+  //           <li>RM25k+</li>
+  //         </ul>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "How do I figure out how much your services will cost?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
-  const developmentAccordionData = [
-    {
-      question: "What size budgets do you typically work with?",
-      answer: (
-        <div>
-          <p>We typically work with clients within the following project brackets: </p>
-          <ul className="custom-point grey">
-            <li>RM2-5k</li>
-            <li>RM5-10k</li>
-            <li>RM10-20k</li>
-            <li>RM25k+</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      question: "How do I figure out how much your services will cost?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-  ];
+  // const developmentAccordionData = [
+  //   {
+  //     question: "What size budgets do you typically work with?",
+  //     answer: (
+  //       <div>
+  //         <p>We typically work with clients within the following project brackets: </p>
+  //         <ul className="custom-point grey">
+  //           <li>RM2-5k</li>
+  //           <li>RM5-10k</li>
+  //           <li>RM10-20k</li>
+  //           <li>RM25k+</li>
+  //         </ul>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "How do I figure out how much your services will cost?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
-  const designAccordionData = [
-    {
-      question: "What size budgets do you typically work with?",
-      answer: (
-        <div>
-          <p>We typically work with clients within the following project brackets: </p>
-          <ul className="custom-point grey">
-            <li>RM2-5k</li>
-            <li>RM5-10k</li>
-            <li>RM10-20k</li>
-            <li>RM25k+</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      question: "How do I figure out how much your services will cost?",
-      answer: (
-        <div>
-          <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
-        </div>
-      ),
-    },
-  ];
+  // const designAccordionData = [
+  //   {
+  //     question: "What size budgets do you typically work with?",
+  //     answer: (
+  //       <div>
+  //         <p>We typically work with clients within the following project brackets: </p>
+  //         <ul className="custom-point grey">
+  //           <li>RM2-5k</li>
+  //           <li>RM5-10k</li>
+  //           <li>RM10-20k</li>
+  //           <li>RM25k+</li>
+  //         </ul>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     question: "How do I figure out how much your services will cost?",
+  //     answer: (
+  //       <div>
+  //         <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit... </p>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
   // PARALLAX FOR GRADIENT IMAGES
   const rotateImgTriggerWhyRef = useRef(null);
@@ -782,7 +750,7 @@ const Homepage = () => {
             </div>
           </div>
 
-          <div className="tabs-link-wrap">
+          {/* <div className="tabs-link-wrap">
             <div className="desktop-tabs">
               <div className="tabs-link">
                 <div className="tabs-link">
@@ -803,13 +771,13 @@ const Homepage = () => {
             </div>
           </div>
 
-          {/* tab content */}
           <div className="tab-wrapper tabs-result-wrapper triggerElement active">
             {activeTab === 1 && <Accordion data={pricingAccordionData} accordionId="pricingAccordion" />}
             {activeTab === 2 && <Accordion data={startProjectAccordionData} accordionId="startProjectAccordion" />}
             {activeTab === 3 && <Accordion data={developmentAccordionData} accordionId="developmentAccordion" />}
             {activeTab === 4 && <Accordion data={designAccordionData} accordionId="designAccordion" />}
-          </div>
+          </div> */}
+          <FaqSection />
         </div>
       </section>
 

@@ -6,19 +6,20 @@ import CustomCursor from "./components/Cursor/CustomCursor";
 
 // main
 function App({ children }) {
-  // Add prop validation for 'children'
-  App.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-  return (
-    <>
-      <CustomCursor />
-      <main className="main-content">
-        <HeaderRoutes />
-        {children}
-      </main>
-    </>
-  );
+    // Add prop validation for 'children'
+    App.propTypes = {
+        children: PropTypes.node.isRequired,
+    };
+
+    return (
+        <>
+            <CustomCursor />
+            <main className="main-content">
+                <HeaderRoutes />
+                {children}
+            </main>
+        </>
+    );
 }
 
 export default App;
