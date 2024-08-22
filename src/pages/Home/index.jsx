@@ -45,6 +45,7 @@ import SwiperTeam from "../../components/Swiper/SwiperTeam";
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
 import usePinCard from "../../components/Functions/usePinCard";
 import Contact from "../../components/Contact/Contact";
+import CardStack from "../../components/Portfolio/cardStack";
 
 const Homepage = () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -762,41 +763,7 @@ const Homepage = () => {
             </div>
           </div>
 
-          <div className="cards-grid portfolio">
-            <PortfolioCard
-              title="Digital Product Design Solution"
-              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-              the
-              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book."
-              tags={["Product Design"]}
-              imageUrl={portfolioImg01}
-              linkTo="/inner-portfolio"
-              usability={85}
-              userRetention={70}
-            />
-
-            <PortfolioCard
-              title="Félix Péault – Portfolio"
-              description="Portfolio of Félix Péault, Freelance Senior Digital Designer and Art Director working worldwide
-              and pushing boundaries of conceptual and innovative digital design."
-              tags={["Animation 3D", "Web Design"]}
-              imageUrl={portfolioImg03}
-              linkTo="/inner-portfolio"
-              usability={90}
-              userRetention={80}
-            />
-
-            <PortfolioCard
-              title="Félix Péault – Portfolio"
-              description="Leading Bitcoin Data and Stats site. Live price action, monitor on-chain data, and track key economic indicators."
-              tags={["Branding", "Web Design"]}
-              imageUrl={portfolioImg02}
-              linkTo="/inner-portfolio"
-              usability={75}
-              userRetention={60}
-            />
-          </div>
+          <CardStack />
         </div>
       </section>
 
@@ -849,8 +816,7 @@ const Homepage = () => {
       {/* contact */}
       <Contact />
 
-      {/* footer */}
-      <Footer />
+     
     </>
   );
 };

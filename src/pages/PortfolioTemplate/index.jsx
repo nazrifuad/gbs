@@ -1,33 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchAPI } from '../../utils/fetchData';
+import PortfolioBanner from '../../components/Portfolio/portfolioBanner';
+import PinnedSection from '../../components/Portfolio/pinnedSection';
+import Contact from '../../components/Contact/Contact';
 
 export default function Index() {
     const { slug } = useParams();
     const [portfolio, setPortfolio] = useState();
 
-    console.log(slug)
+    // Fetch the Strapi endpoint from environment variables
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch(`http://localhost:1337/api/portfolios/${slug}`);
-            const data = await response.json();
-            setPortfolio(data);
+            try {
+                const response = await fetchAPI(`/portfolios/${slug}`);
+                const data = await response;
+                setPortfolio(data.data.attributes);
+            } catch (error) {
+                console.error('Error fetching portfolio:', error);
+            }
         }
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        console.log(portfolio);
-    }, [portfolio]);
+    }, [slug]);
 
     return (
         <>
         {portfolio && (
             <>
-                <h1>{portfolio.title}</h1>
-                <p className=''>This is the page slug : {portfolio.title}</p>
+                <PortfolioBanner title={portfolio.title} tags={portfolio.tag} bannerImage={portfolio.bannerImage.data.attributes.url} />
+                <PinnedSection contents={portfolio.pinned_tabs} />
             </>
         )}
+        <Contact />
         </>
     );
 }

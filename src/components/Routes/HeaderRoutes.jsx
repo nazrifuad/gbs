@@ -5,6 +5,7 @@ import Nav from "../../pages/Nav/Nav";
 import NoPage from "../../pages/NoPage";
 import Homepage from "../../pages/Home";
 import PortfolioTemplate from "../../pages/PortfolioTemplate";
+import Footer from "../Footer/Footer"
 
 // header routing
 const HeaderRoutes = () => {
@@ -17,6 +18,8 @@ const HeaderRoutes = () => {
           <Route path="*" element={<NoPage />} />
           <Route path="/portfolio/:slug" element={<PortfolioTemplate />} />
         </Routes>
+         {/* footer */}
+      <Footer />
       </>
     </Router>
   );
