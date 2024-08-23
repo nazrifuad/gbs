@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.12.1",
+    "framer-motion": "^11.3.29",
     "gsap": "^3.12.5",
     "loconative-scroll": "github:quentinhocde/loconative-scroll",
     "prop-types": "^15.8.1",

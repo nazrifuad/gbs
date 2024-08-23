@@ -11,24 +11,20 @@ import useSmoothScroll from "../Functions/useSmoothScroll";
 
 // header routing
 const HeaderRoutes = () => {
-
-  // eslint-disable-next-line no-unused-vars
-  const scroll  = useSmoothScroll();
+    // eslint-disable-next-line no-unused-vars
+    const scroll = useSmoothScroll();
 
     return (
         <Router>
-            <>
-                <Nav />
-                <Routes>
-                    <Route path="/" element={<Homepage />} />
-                    <Route path="*" element={<NoPage />} />
-                    <Route path="/portfolio/:slug" element={<PortfolioTemplate />} />
-                </Routes>
-                <Footer />
+            <Nav />
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="*" element={<NoPage />} />
+                <Route path="/portfolio/:slug" element={<PortfolioTemplate />} />
+            </Routes>
+            <Footer />
 
-                <RevealAnimation />
-
-            </>
+            <RevealAnimation />
         </Router>
     );
 };

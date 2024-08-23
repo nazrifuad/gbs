@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const Accordion = ({ data, accordionId }) => {
+export default function Accordion({ data, accordionId }) {
     const [openAccordion, setOpenAccordion] = useState(0);
+    const accordionRef = useRef(null);
 
     const handleAccordionClick = (index) => {
         setOpenAccordion(openAccordion === index ? null : index);
@@ -9,7 +10,7 @@ const Accordion = ({ data, accordionId }) => {
 
     return (
         <>
-            <div className="accordion-content" id={accordionId}>
+            <div className="accordion-content" id={accordionId} ref={accordionRef}>
                 <div className="accordion-wrapper">
                     {data.map((item, index) => (
                         <div className={`accordion-item ${openAccordion === index ? "active" : ""}`} key={index}>
@@ -32,6 +33,4 @@ const Accordion = ({ data, accordionId }) => {
             </div>
         </>
     );
-};
-
-export default Accordion;
+}

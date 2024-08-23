@@ -4,9 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import Swiper from "swiper";
-import "swiper/swiper-bundle.css";
-import { Navigation } from "swiper/modules";
+// import Swiper from "swiper";
+// import "swiper/swiper-bundle.css";
+// import { Navigation } from "swiper/modules";
 
 import heroVideo from "../../assets/img/hero-video-overlay.mp4";
 
@@ -18,23 +18,12 @@ import pulseLogo from "../../assets/img/PULSE.png";
 import sgsupportLogo from "../../assets/img/SG SUPPORT.png";
 import gradImg03 from "../../assets/img/gradient-element-03.png";
 
-import syafeeq from "../../assets/img/syafeeq.png";
-import keyang from "../../assets/img/Ke Yang.png";
-import fitri from "../../assets/img/Fitri.png";
-import hanim from "../../assets/img/Hanim.png";
-import yasmeen from "../../assets/img/Yasmeen.png";
-import nazri from "../../assets/img/Nazri.png";
-import james from "../../assets/img/James.png";
-import amalia from "../../assets/img/Amalia.png";
-import dayang from "../../assets/img/Dayang.png";
-
 import gridBg from "../../assets/img/grid-bg.png";
 import gradImg01 from "../../assets/img/gradient-element-01.png";
 import gradImg02 from "../../assets/img/gradient-element-02.png";
 
 // components
-import Accordion from "../../components/Accordion/Accordion";
-import SwiperTeam from "../../components/Swiper/SwiperTeam";
+import TeamSlider from "../../components/Swiper/TeamSlider";
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
 import usePinCard from "../../components/Functions/usePinCard";
 import Contact from "../../components/Contact/Contact";
@@ -197,45 +186,6 @@ const Homepage = () => {
     };
   }, []); // runs once after the initial render
 
-  // TEAM SECTION
-  // team data info
-  const teamMembers = [
-    { firstName: "Syafeeq", secName: "Zaki", position: "Chief Executive Officer", image: syafeeq },
-    { firstName: "Ke Yang", secName: "Yong", position: "Senior Developer", image: keyang },
-    { firstName: "Fitri", secName: "Afiq", position: "Web Developer", image: fitri },
-    { firstName: "Fatima", secName: "Hanim", position: "Web Developer", image: hanim },
-    { firstName: "Yasmeen", secName: "Zaipul", position: "Web Developer", image: yasmeen },
-    { firstName: "Nazri", secName: "Fuad", position: "Web Developer", image: nazri },
-    { firstName: "James", secName: "Lee", position: "Web Developer", image: james },
-    { firstName: "Amalia", secName: "Natasha", position: "Web Developer", image: amalia },
-    { firstName: "Dayang", secName: "Zahira", position: "Web Developer", image: dayang },
-  ];
-  // team slider
-  useEffect(() => {
-    const swiper = new Swiper(".swiper.team", {
-      slidesPerView: 1,
-      spaceBetween: 40,
-      grabCursor: true,
-      speed: 1000,
-      modules: [Navigation],
-      navigation: {
-        nextEl: ".custom-nav-wrapper.team .custom-button-next",
-        prevEl: ".custom-nav-wrapper.team .custom-button-prev",
-      },
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-        },
-        640: {
-          slidesPerView: 2,
-        },
-        1300: {
-          slidesPerView: 3,
-        },
-      },
-    });
-  }, []); // run this effect only once when the component mounts
-
   // EXPERTISE SECTION
   // change text animation
   // { TO REVISE LATER }
@@ -280,7 +230,7 @@ const Homepage = () => {
 
   // PORTFOLIO SECTION
   // pinning layered
-  const pinningLayered = usePinCard();
+  // const pinningLayered = usePinCard();
 
   // FAQS SECTION
   // ACCORDION
@@ -657,7 +607,7 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="subsection team-section pt-unset">
+        {/* <div className="subsection team-section pt-unset">
           <div className="container">
             <div className="general-heading-wrapper">
               <div className="subheader-wrapper text-center">
@@ -678,7 +628,9 @@ const Homepage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <TeamSlider />
 
         <div className="subsection expertise-section">
           <div className="container">

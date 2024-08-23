@@ -4,7 +4,6 @@ import { Link as ScrollLink, Events, scrollSpy } from 'react-scroll';
 import { useLocation } from "react-router-dom";
 import MainLogo from "../../components/Logo/MainLogo";
 
-import previewIcon from "../../assets/img/preview-icon.svg";
 import MagneticHover from "../../components/Functions/MagneticHover";
 
 const Nav = () => {

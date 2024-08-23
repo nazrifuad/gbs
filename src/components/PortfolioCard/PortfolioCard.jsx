@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import MagneticHover from "../Functions/MagneticHover";
+import { Link } from "react-router-dom";
 
 const renderServiceTags = (tags) => {
     return tags.map((tag, index) => (

@@ -8,7 +8,7 @@ import CustomCursor from "./components/Cursor/CustomCursor";
 function App({ children }) {
     // Add prop validation for 'children'
     App.propTypes = {
-        children: PropTypes.node.isRequired,
+        children: PropTypes.node,
     };
 
     return (
