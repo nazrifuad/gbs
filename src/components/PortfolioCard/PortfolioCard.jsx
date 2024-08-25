@@ -42,11 +42,11 @@ const PortfolioCard = ({ title, description, tags, imageUrl, linkTo, usability, 
                                 <div className="flex-center flex-start btn">
                                     <MagneticHover>
                                         <div className="default-btn secondary-btn">
-                                            <a href={linkTo} className="btn-link">
+                                            <Link to={linkTo} className="btn-link">
                                                 <div className="btn-text" data-replace="View Case Study">
                                                     <span className="inner-btn-text">View Case Study</span>
                                                 </div>
-                                            </a>
+                                            </Link>
                                         </div>
                                     </MagneticHover>
                                 </div>

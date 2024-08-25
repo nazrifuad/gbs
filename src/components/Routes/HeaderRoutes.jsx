@@ -1,31 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { Routes, Route, useLocation } from "react-router-dom";
 import Nav from "../../pages/Nav/Nav";
-
 import NoPage from "../../pages/NoPage";
 import Homepage from "../../pages/Home";
 import PortfolioTemplate from "../../pages/PortfolioTemplate";
 import Footer from "../Footer/Footer";
 import RevealAnimation from "../Functions/RevealAnimation";
 import useSmoothScroll from "../Functions/useSmoothScroll";
+import PageTransition from "../Animation/PageTransition";
+import { AnimatePresence } from "framer-motion";
 
-// header routing
 const HeaderRoutes = () => {
-    // eslint-disable-next-line no-unused-vars
-    const scroll = useSmoothScroll();
+    useSmoothScroll();
+    const location = useLocation();
 
     return (
-        <Router>
+        <>
             <Nav />
-            <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="*" element={<NoPage />} />
-                <Route path="/portfolio/:slug" element={<PortfolioTemplate />} />
-            </Routes>
+            <AnimatePresence mode="wait" initial={false}>
+                <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={<PageTransition routeText={'Home'}><Homepage /></PageTransition>} />
+                    <Route path="*" element={<PageTransition routeText={'404'}><NoPage /></PageTransition>} />
+                    <Route path="/portfolio/:slug" element={<PageTransition routeText={'Portfolio'}><PortfolioTemplate /></PageTransition>} />
+                </Routes>
+            </AnimatePresence>
             <Footer />
-
             <RevealAnimation />
-        </Router>
+        </>
     );
 };
 
